@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>香港历史知识问答</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", SimHei, sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #222;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        header {
+            background: #b82601;
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        .intro {
+            padding: 24px;
+            background: #fff8f8;
+            border-bottom: 1px solid #eee;
+        }
+        .intro h3 {
+            color: #b82601;
+            margin-bottom: 10px;
+        }
+
+        /* 视频区域样式 */
+        .video-wrap {
+            padding: 24px;
+            background: #fef6f6;
+            border-bottom: 1px solid #eee;
+        }
+        .video-wrap h3 {
+            color: #b82601;
+            margin-bottom: 12px;
+        }
+        .video-box {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-box video,
+        .video-box iframe {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16 / 9;
+            border: none;
+        }
+
+        .quiz-box {
+            padding: 30px;
+        }
+        .question-num {
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .question-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+        .options-list {
+            list-style: none;
+        }
+        .options-list li {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .options-list li:hover {
+            border-color: #b82601;
+            background: #fff2f2;
+        }
+        /* 答题状态样式 */
+        .option-correct {
+            background: #e6f9e6 !important;
+            border-color: #009944 !important;
+            color: #007733;
+        }
+        .option-wrong {
+            background: #ffeaea !important;
+            border-color: #dd3333 !important;
+            color: #bb2222;
+        }
+        .tip-box {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            display: none;
+        }
+        .tip-correct {
+            background: #e6f9e6;
+            border:1px solid #009944;
+        }
+        .tip-wrong {
+            background: #ffeaea;
+            border:1px solid #dd3333;
+        }
+        .btn-group {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 26px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #nextBtn {
+            background: #b82601;
+            color: white;
+        }
+        #nextBtn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        #resetBtn {
+            background: #444;
+            color: white;
+        }
+        #resetBtn:hover {
+            background: #222;
+        }
+        #nextBtn:not(:disabled):hover {
+            background: #9e1f00;
+        }
+        .score-panel {
+            margin-top: 20px;
+            padding: 16px;
+            background: #f0f4ff;
+            border-radius: 8px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+        @media(max-width:600px){
+            header h1 {
+                font-size: 22px;
+            }
+            .quiz-box, .video-wrap, .intro {
+                padding: 16px;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>香港历史知识问答</h1>
+            <p>了解香港发展历史，学习正确历史知识</p>
+        </header>
+
+        <div class="intro">
+            <h3>📖 网站简介</h3>
+            <p>本问答题库围绕香港抗战相关展厅展品设置考题，学习香港抗战历史，铭记港人的抗日斗争事迹。完成答题可查看得分与解析，树立正确历史观。</p>
+        </div>
+
+        <!-- 香港历史科普视频模块（已替换为BV1aC4y1Z72T视频） -->
+        <div class="video-wrap">
+            <h3>🎬 先观看香港历史科普短片（答题预习）</h3>
+            <div class="video-box">
+                <!-- 方案1：本地视频（离线使用，将mp4文件放入同目录修改src即可） -->
+                <!-- <video controls preload="auto">
+                    <source src="hongkong-history.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video> -->
+
+                <!-- 方案2：B站官方可嵌入播放器，视频BV1aC4y1Z72T -->
+                <iframe 
+                    src="https://player.bilibili.com/player.html?bvid=BV1aC4y1Z72T&autoplay=0&danmaku=0" 
+                    frameborder="0" 
+                    allowfullscreen
+                    allow="encrypted-media">
+                </iframe>
+            </div>
+            <p style="margin-top:10px;color:#666;font-size:14px;">建议观看完视频再开始答题，加深历史记忆</p>
+        </div>
+
+        <div class="quiz-box">
+            <div class="question-num" id="qNum">题目 1 / 10</div>
+            <div class="question-title" id="question"></div>
+            <ul class="options-list" id="options"></ul>
+            <div class="tip-box" id="answerTip"></div>
+
+            <div class="btn-group">
+                <button id="nextBtn" disabled>下一题</button>
+                <button id="resetBtn">重新答题</button>
+            </div>
+
+            <div class="score-panel">
+                <h4>当前得分：<span id="score">0</span> / <span id="total">10</span></h4>
+            </div>
+        </div>
+
+        <footer>
+            香港历史知识问答学习平台 · 尊重历史，铭记发展历程
+        </footer>
+    </div>
+
+    <script>
+        // 10道展厅展品题库
+        const quizData = [
+            {
+                question: "1. 8号展厅的展览主题为？",
+                options: ["A. 日占时期香港游击斗争","B. 日军侵华·携手抗敌","C. 近代香港炮台发展史","D. 香港海上防卫现代化历程"],
+                answer: "B",
+                explain: "8号展厅展览主题为日军侵华·携手抗敌，展现抗日战争时期香港发挥的重要作用。"
+            },
+            {
+                question: "2. 展厅民间爱国饰品子弹坠饰项链的主体原材料是？",
+                options: ["A. 炮弹壳","B. 步枪子弹弹头","C. 手榴弹碎片","D. 飞机残骸零件"],
+                answer: "B",
+                explain: "民间爱国饰品子弹坠饰项链以步枪子弹弹头作为主体原材料，是战时民间极具代表性的爱国纪念品。"
+            },
+            {
+                question: "3. 为驻港英军制作战前军帽的本地商铺是？",
+                options: ["A. 恒昌制衣行","B. 利民军服厂","C. 伟林裁缝及制帽店","D. 大华缝纫工坊"],
+                answer: "C",
+                explain: "伟林裁缝及制帽店是战前为驻港英军制作军帽的本地商铺，见证战前香港本地军需相关产业。"
+            },
+            {
+                question: "4. 记录海外援华物资经香港转运的复刻刊物是？",
+                options: ["A. 《香港战时公报》","B. 1939–1940英文版《保卫中国同盟年报》","C. 《华南抗战周刊》","D. 《驻港英军防务日志》"],
+                answer: "B",
+                explain: "1939–1940英文版《保卫中国同盟年报》记录大量海外援华物资经由香港转运内地支援抗战的史实。"
+            },
+            {
+                question: "5. 英军服务团隐蔽传递情报的工具是？",
+                options: ["A. 空心钢笔","B. 中空传信木螺栓","C. 夹层怀表","D. 伪装书本"],
+                answer: "B",
+                explain: "中空传信木螺栓是英军服务团用来隐蔽传递情报的专用工具。"
+            },
+            {
+                question: "6. 复刻手绘地图标注的日军设施为？",
+                options: ["A. 军用码头","B. 步兵营房","C. 高射炮阵地","D. 物资仓库"],
+                answer: "C",
+                explain: "展厅复刻手绘地图上面重点标注的是日军高射炮阵地。"
+            },
+            {
+                question: "7. 1947年表彰西贡乡民抗日的配套展品是？",
+                options: ["A. 锦旗配套原始文字档案","B. 参战乡民的旧军服","C. 战时捐款账本","D. 游击队员的刀具"],
+                answer: "A",
+                explain: "展品包含锦旗以及配套原始文字档案，用以1947年表彰西贡乡民在抗日战争中的贡献。"
+            },
+            {
+                question: "8. 体现香港回归后海防变化的两件实物是？",
+                options: ["A. 军舰老照片、航海罗盘","B. 驻港英军旧徽章、海防炮台模型","C. 1997驻港部队纪念封、南海舰队标识木牌","D. 现代救生设备、海军制服"],
+                answer: "C",
+                explain: "1997驻港部队纪念封、南海舰队标识木牌两件实物，直观展现香港回归之后海防力量的变迁。"
+            },
+            {
+                question: "9. 8号展厅展示历史的起始年份是？",
+                options: ["A. 1929年","B. 1931年","C. 1937年","D. 1941年"],
+                answer: "B",
+                explain: "8号展厅叙事从1931年九一八事变开启，梳理日军侵华直至香港抗战相关历史脉络。"
+            },
+            {
+                question: "10. 伟林裁缝店出产的军帽体现战前香港的什么作用？",
+                options: ["A. 向外出口民用衣帽赚取资金","B. 本地轻工业供给英军军备物资，支撑本地防务","C. 批量制作服饰赈济内地难民","D. 为民间抗日团体缝制制服"],
+                answer: "B",
+                explain: "伟林裁缝及制帽店为驻港英军生产军帽，反映战前香港本地轻工业承担军备物资供应、支撑本地防务的角色。"
+            }
+        ];
+
+        // 全局变量
+        let currentIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        // DOM元素
+        const qNumEl = document.getElementById("qNum");
+        const questionEl = document.getElementById("question");
+        const optionsEl = document.getElementById("options");
+        const tipEl = document.getElementById("answerTip");
+        const nextBtn = document.getElementById("nextBtn");
+        const resetBtn = document.getElementById("resetBtn");
+        const scoreEl = document.getElementById("score");
+        const totalEl = document.getElementById("total");
+
+        // 初始化总题目数量
+        totalEl.textContent = quizData.length;
+
+        // 渲染当前题目
+        function renderQuiz(){
+            answered = false;
+            tipEl.style.display = "none";
+            nextBtn.disabled = true;
+            const item = quizData[currentIndex];
+            qNumEl.textContent = `题目 ${currentIndex+1} / ${quizData.length}`;
+            questionEl.textContent = item.question;
+            optionsEl.innerHTML = "";
+
+            // 生成选项列表
+            item.options.forEach(opt => {
+                const li = document.createElement("li");
+                li.textContent = opt;
+                li.addEventListener("click", ()=>selectOption(opt, li));
+                optionsEl.appendChild(li);
+            })
+        }
+
+        // 选择答案逻辑
+        function selectOption(selectOpt, liDom){
+            if(answered) return;
+            answered = true;
+            nextBtn.disabled = false;
+            const qItem = quizData[currentIndex];
+            const selectKey = selectOpt.split(".")[0];
+
+            // 遍历所有选项，标记正确/错误
+            const allLi = optionsEl.querySelectorAll("li");
+            allLi.forEach(li=>{
+                const key = li.textContent.split(".")[0];
+                if(key === qItem.answer){
+                    li.classList.add("option-correct");
+                }else if(key === selectKey && key !== qItem.answer){
+                    li.classList.add("option-wrong");
+                }
+                li.style.pointerEvents = "none";
+            })
+
+            // 计算得分+展示解析提示
+            tipEl.style.display = "block";
+            if(selectKey === qItem.answer){
+                score++;
+                scoreEl.textContent = score;
+                tipEl.className = "tip-box tip-correct";
+                tipEl.innerHTML = `<strong>回答正确！</strong><br>解析：${qItem.explain}`;
+            }else{
+                tipEl.className = "tip-box tip-wrong";
+                tipEl.innerHTML = `<strong>回答错误</strong>，正确答案是 ${qItem.answer}<br>解析：${qItem.explain}`;
+            }
+        }
+
+        // 下一题点击事件
+        nextBtn.addEventListener("click", ()=>{
+            if(currentIndex < quizData.length - 1){
+                currentIndex++;
+                renderQuiz();
+            }else{
+                // 全部答完弹窗总结
+                const fullScore = quizData.length;
+                const rate = score / fullScore;
+                let msg = "";
+                if(rate >= 0.7){
+                    msg = "展厅历史知识掌握优秀！";
+                }else{
+                    msg = "建议重新观看视频复习相关展厅历史知识点";
+                }
+                alert(`答题完成！你的总分：${score} / ${fullScore}\n${msg}`);
+            }
+        })
+
+        // 重置全部答题
+        resetBtn.addEventListener("click", ()=>{
+            currentIndex = 0;
+            score = 0;
+            scoreEl.textContent = 0;
+            renderQuiz();
+        })
+
+        // 页面加载完成渲染第一题
+        window.onload = renderQuiz;
+    </script>
+</body>
+</html>
