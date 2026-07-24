@@ -29,15 +29,37 @@
             background: #b82601;
             color: white;
             padding: 24px;
-            text-align: center;
         }
-        header h1 {
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .header-text {
+            flex: 1;
+            min-width: 0;
+            text-align: left;
+        }
+        .header-text h1 {
             font-size: 28px;
             margin-bottom: 8px;
         }
-        header p {
+        .header-text p {
             opacity: 0.9;
             font-size: 16px;
+        }
+        .header-link a {
+            color: #ffffff;
+            text-decoration: underline;
+            font-size: 15px;
+            white-space: nowrap;
+        }
+        .header-link a:hover {
+            color: #ffffcc;
         }
         .intro {
             padding: 24px;
@@ -47,6 +69,58 @@
         .intro h3 {
             color: #b82601;
             margin-bottom: 10px;
+        }
+
+        /* 分頁切換標籤樣式 */
+        .tab-nav {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            background: #fff;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            background: #fafafa;
+            color: #666;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 0;
+        }
+        .tab-btn.active {
+            background: #b82601;
+            color: white;
+            font-weight: bold;
+        }
+        .tab-btn:hover:not(.active) {
+            background: #fff2f2;
+            color: #b82601;
+        }
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* 展廳詳細文字介紹樣式 */
+        .hall-intro {
+            padding: 24px;
+            background: #ffffff;
+            line-height: 1.9;
+        }
+        .hall-intro h3 {
+            color: #b82601;
+            margin-bottom: 14px;
+        }
+        .hall-intro p {
+            margin-bottom: 14px;
+            text-align: justify;
+            color: #333;
+        }
+        .hall-intro p:last-child {
+            margin-bottom: 0;
         }
         /* 影片模組通用樣式 */
         .video-wrap {
@@ -175,11 +249,22 @@
             border-top: 1px solid #eee;
         }
         @media(max-width:600px){
-            header h1 {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .header-text {
+                text-align: center;
+            }
+            .header-text h1 {
                 font-size: 22px;
             }
-            .quiz-box, .video-wrap, .intro {
+            .hall-intro, .quiz-box, .video-wrap, .intro {
                 padding: 16px;
+            }
+            .tab-btn {
+                padding: 12px;
+                font-size: 15px;
             }
             button {
                 width: 100%;
@@ -190,8 +275,17 @@
 <body>
     <div class="container">
         <header>
-            <h1>8號展覽廳-日軍侵華.攜手抗敵(問答)</h1>
-            <p>了解香港發展歷史，學習正確歷史知識（8號館主題）</p>
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>8號展覽廳-日軍侵華.攜手抗敵(問答)</h1>
+                    <p>了解香港發展歷史，學習正確歷史知識（8號館主題）</p>
+                </div>
+                <div class="header-link">
+                    <a href="https://ks.wjx.com/vm/PikYVGm.aspx" target="_blank" rel="noopener noreferrer">
+                        問答提交網站
+                    </a>
+                </div>
+            </div>
         </header>
 
         <div class="intro">
@@ -199,46 +293,66 @@
             <p>本問答題庫圍繞8號展廳展品與香港抗戰歷史設置考題，觀看影片後完成測驗，加深對日軍侵華、香港援華通道歷史的認識。</p>
         </div>
 
-        <!-- 中文介紹影片（原有B站影片） -->
-        <div class="video-wrap">
-            <h3>🎬 8號館 中文介紹影片</h3>
-            <div class="video-box">
-                <iframe 
-                    src="https://player.bilibili.com/player.html?bvid=BV15FgQ6hEtj&autoplay=0&danmaku=0" 
-                    frameborder="0" 
-                    allowfullscreen
-                    allow="encrypted-media">
-                </iframe>
-            </div>
-            <p class="video-desc">建議先觀看中文影片，認識8號館完整展覽脈絡</p>
+        <!-- 分頁切換標籤 -->
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="intro">🏛️ 展廳介紹</button>
+            <button class="tab-btn" data-tab="quiz">📝 問答測驗</button>
         </div>
 
-        <!-- 新增英文介紹影片 Google Drive -->
-        <div class="video-wrap">
-            <h3>🎬 8號館 English Introduction Video</h3>
-            <div class="video-box">
-                <iframe 
-                    src="https://drive.google.com/file/d/1OGSQtzmjMIEBW8cWAuXqb7rfMj6ftjv5/preview" 
-                    frameborder="0" 
-                    allowfullscreen>
-                </iframe>
+        <!-- 第一頁：展廳文字介紹 -->
+        <div class="tab-pane active" id="tab-intro">
+            <div class="hall-intro">
+                <h3>8號展廳詳細介紹</h3>
+                <p>香港抗戰及海防博物館 8 號展廳的主題為《日軍侵華・攜手抗敵》，主要講述 1931年至1941年香港淪陷前夕的抗戰支援歷史。目的是讓參觀者加深對香港抗戰過程的認知，深入瞭解戰前香港作為重要國際樞紐全力支援內地抗日的史實；通過館藏文物了解香港民眾、愛國團體與中外志願人員的救國行動；感受香港與內地唇亡齒寒共同抗敵的處境；培養銘記歷史、珍惜和平、熱愛家國的良好情懷。</p>
+                <p>首先，我們進入民間愛國展區，這裡陳列著抗戰時期香港市民自製的子彈造型項鍊，代表普通百姓樸素而真摯的抗日愛國之心。同時展出由本地工廠生產的英軍制式軍帽，證明戰前香港輕工業積極配合本地防務建設，為駐港部隊提供物資支援， 展現當時香港社會全民備戰、共同抗敵的精神。</p>
+                <p>接著， 我們參觀援華物資與情報戰線展區， 展廳中的《保衛中國同盟年報》複刻資料詳細記錄香港接收海外捐款及物資，並源源不斷輸送到內地抗日戰場的過程，體現出香港無可替代的援華樞紐地位。此外，傳信木螺栓和日軍陣地偵察地圖還原了英軍服務團情報人員冒險搜集軍情，秘密協助抗日工作的隱蔽事蹟， 讓我們看見地方民間力量的參與和支持。</p>
+                <p>最後， 本展廳還陳列著1947年西貢鄉民抗日表彰檔案、南海艦隊標識木牌與1997年駐港部隊進駐紀念封等專屬實物展品。這批文物不再聚焦戰前支援與情報工作，而是完整記錄香港鄉民自發抗日，戰後獲得嘉獎的光榮事蹟。同時通過新舊館藏實物對照，清晰展現香港從戰亂備戰、全民救國到回歸後安穩守護的歷史轉變。 整個展廳文物層層遞進，全面印證抗戰時期香港各界不分階層 共同抗敵，讓我們深刻體會香港全民抗戰的精神，更懂得今日和平來之不易。</p>
             </div>
-            <p class="video-desc">English version introduction video of Exhibition Hall 8</p>
         </div>
 
-        <div class="quiz-box">
-            <div class="question-num" id="qNum">題目 1 / 8</div>
-            <div class="question-title" id="question"></div>
-            <ul class="options-list" id="options"></ul>
-            <div class="tip-box" id="answerTip"></div>
-
-            <div class="btn-group">
-                <button id="nextBtn" disabled>下一題</button>
-                <button id="resetBtn">重新答題</button>
+        <!-- 第二頁：影片 + 問答測驗 -->
+        <div class="tab-pane" id="tab-quiz">
+            <!-- 中文介紹影片 -->
+            <div class="video-wrap">
+                <h3>🎬 8號館 中文介紹影片</h3>
+                <div class="video-box">
+                    <iframe 
+                        src="https://player.bilibili.com/player.html?bvid=BV15FgQ6hEtj&autoplay=0&danmaku=0" 
+                        frameborder="0" 
+                        allowfullscreen
+                        allow="encrypted-media">
+                    </iframe>
+                </div>
+                <p class="video-desc">建議先觀看中文影片，認識8號館完整展覽脈絡</p>
             </div>
 
-            <div class="score-panel">
-                <h4>當前得分：<span id="score">0</span> / <span id="total">8</span></h4>
+            <!-- 英文介紹影片 Google Drive -->
+            <div class="video-wrap">
+                <h3>🎬 8號館 English Introduction Video</h3>
+                <div class="video-box">
+                    <iframe 
+                        src="https://drive.google.com/file/d/1OGSQtzmjMIEBW8cWAuXqb7rfMj6ftjv5/preview" 
+                        frameborder="0" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="video-desc">English version introduction video of Exhibition Hall 8</p>
+            </div>
+
+            <div class="quiz-box">
+                <div class="question-num" id="qNum">題目 1 / 8</div>
+                <div class="question-title" id="question"></div>
+                <ul class="options-list" id="options"></ul>
+                <div class="tip-box" id="answerTip"></div>
+
+                <div class="btn-group">
+                    <button id="nextBtn" disabled>下一題</button>
+                    <button id="resetBtn">重新答題</button>
+                </div>
+
+                <div class="score-panel">
+                    <h4>當前得分：<span id="score">0</span> / <span id="total">8</span></h4>
+                </div>
             </div>
         </div>
 
@@ -248,7 +362,22 @@
     </div>
 
     <script>
-        // 全新8道繁體題目
+        // 分頁切換邏輯
+        const tabBtns = document.querySelectorAll(".tab-btn");
+        const tabPanes = document.querySelectorAll(".tab-pane");
+        tabBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const target = btn.dataset.tab;
+                // 切換按鈕狀態
+                tabBtns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                // 切換內容顯示
+                tabPanes.forEach(pane => pane.classList.remove("active"));
+                document.getElementById("tab-" + target).classList.add("active");
+            });
+        });
+
+        // 8道繁體題目
         const quizData = [
             {
                 question: "1. 展廳民間愛國飾品子彈墜飾項鏈的主體原材料是:",
