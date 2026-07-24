@@ -119,9 +119,34 @@
             text-align: justify;
             color: #333;
         }
-        .hall-intro p:last-child {
-            margin-bottom: 0;
+        .hall-intro .intro-img {
+            width: 100%;
+            max-width: 650px;
+            margin: 16px auto 10px;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        .hall-intro .img-caption {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .img-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 16px 0 24px;
+        }
+        .img-group .img-item {
+            flex: 1;
+            min-width: 280px;
+        }
+        .img-group .intro-img {
+            margin: 0 auto 8px;
+        }
+
         /* 影片模組通用樣式 */
         .video-wrap {
             padding: 24px;
@@ -299,13 +324,32 @@
             <button class="tab-btn" data-tab="quiz">📝 問答測驗</button>
         </div>
 
-        <!-- 第一頁：展廳文字介紹 -->
+        <!-- 第一頁：展廳文字介紹 + 展品圖片 -->
         <div class="tab-pane active" id="tab-intro">
             <div class="hall-intro">
                 <h3>8號展廳詳細介紹</h3>
                 <p>香港抗戰及海防博物館 8 號展廳的主題為《日軍侵華・攜手抗敵》，主要講述 1931年至1941年香港淪陷前夕的抗戰支援歷史。目的是讓參觀者加深對香港抗戰過程的認知，深入瞭解戰前香港作為重要國際樞紐全力支援內地抗日的史實；通過館藏文物了解香港民眾、愛國團體與中外志願人員的救國行動；感受香港與內地唇亡齒寒共同抗敵的處境；培養銘記歷史、珍惜和平、熱愛家國的良好情懷。</p>
-                <p>首先，我們進入民間愛國展區，這裡陳列著抗戰時期香港市民自製的子彈造型項鍊，代表普通百姓樸素而真摯的抗日愛國之心。同時展出由本地工廠生產的英軍制式軍帽，證明戰前香港輕工業積極配合本地防務建設，為駐港部隊提供物資支援， 展現當時香港社會全民備戰、共同抗敵的精神。</p>
+
+                <!-- 民間愛國展區 兩件展品並排 -->
+                <div class="img-group">
+                    <div class="img-item">
+                        <img src="子彈項鏈.jpg" alt="子彈墜飾項鏈" class="intro-img">
+                        <p class="img-caption">▲ 民間自製子彈墜飾項鏈</p>
+                    </div>
+                    <div class="img-item">
+                        <img src="英軍軍帽.jpg" alt="偉林裁縫店生產英軍軍帽" class="intro-img">
+                        <p class="img-caption">▲ 偉林裁縫及製帽店生產英軍制式軍帽</p>
+                    </div>
+                </div>
+
+                <p>首先，我們進入民間愛國展區，這裡陳列著抗戰時期香港市民自製的子彈造型項鍊，代表普通百姓樸素而真摯的抗日愛國之心。同時展出由本地工廠「偉林裁縫及製帽店」生產的英軍制式軍帽，證明戰前香港輕工業積極配合本地防務建設，為駐港部隊提供物資支援， 展現當時香港社會全民備戰、共同抗敵的精神。</p>
+
+                <!-- 援華物資展區 年報展品 -->
+                <img src="保盟年報.jpg" alt="保衛中國同盟年報英文版複製品" class="intro-img">
+                <p class="img-caption">▲ 1939至1940年度《保衛中國同盟年報》英文版（複製品）</p>
+
                 <p>接著， 我們參觀援華物資與情報戰線展區， 展廳中的《保衛中國同盟年報》複刻資料詳細記錄香港接收海外捐款及物資，並源源不斷輸送到內地抗日戰場的過程，體現出香港無可替代的援華樞紐地位。此外，傳信木螺栓和日軍陣地偵察地圖還原了英軍服務團情報人員冒險搜集軍情，秘密協助抗日工作的隱蔽事蹟， 讓我們看見地方民間力量的參與和支持。</p>
+
                 <p>最後， 本展廳還陳列著1947年西貢鄉民抗日表彰檔案、南海艦隊標識木牌與1997年駐港部隊進駐紀念封等專屬實物展品。這批文物不再聚焦戰前支援與情報工作，而是完整記錄香港鄉民自發抗日，戰後獲得嘉獎的光榮事蹟。同時通過新舊館藏實物對照，清晰展現香港從戰亂備戰、全民救國到回歸後安穩守護的歷史轉變。 整個展廳文物層層遞進，全面印證抗戰時期香港各界不分階層 共同抗敵，讓我們深刻體會香港全民抗戰的精神，更懂得今日和平來之不易。</p>
             </div>
         </div>
